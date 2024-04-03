@@ -1,0 +1,7 @@
+{
+  "name": "poc-biometry-faceid",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
