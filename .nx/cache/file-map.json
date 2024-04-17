@@ -18,6 +18,8 @@
     "@capacitor/keyboard": "5.0.8",
     "@capacitor/status-bar": "5.0.7",
     "@ionic/angular": "^7.0.0",
+    "@ionic/storage": "^4.0.0",
+    "@ionic/storage-angular": "^4.0.0",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -348,7 +350,7 @@
       },
       {
         "file": "src/app/auth/signin/signin.page.html",
-        "hash": "9624660542364045873"
+        "hash": "742390323279328298"
       },
       {
         "file": "src/app/auth/signin/signin.page.scss",
@@ -360,7 +362,7 @@
       },
       {
         "file": "src/app/auth/signin/signin.page.ts",
-        "hash": "12329704750584611784"
+        "hash": "2835106509620308711"
       },
       {
         "file": "src/app/explore-container/explore-container.component.html",

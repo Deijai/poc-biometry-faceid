@@ -1,10 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { BiometricAuth } from '@aparajita/capacitor-biometric-auth';
 import { AndroidBiometryStrength, BiometryError, BiometryErrorType, CheckBiometryResult } from '@aparajita/capacitor-biometric-auth/dist/esm/definitions';
-import { Capacitor } from '@capacitor/core';
+import { Storage } from '@ionic/storage';
 import { PluginListenerHandle } from '@capacitor/core/types/definitions';
-import { ToastController } from '@ionic/angular';
+import { IonInput, LoadingController, ToastController } from '@ionic/angular';
+import { AuthService } from '../services/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-signin',
@@ -13,12 +15,41 @@ import { ToastController } from '@ionic/angular';
 })
 export class SigninPage implements OnInit, OnDestroy {
 
+  public myForm: FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.min(3)]],
+  });
+
   public appListener!: PluginListenerHandle
+  public validateAuthBiometryAndFaceId: boolean = false;
+  public acvivateBioemetry: boolean = false;
 
-  constructor(private toastController: ToastController, private router: Router) { }
+  @ViewChild('inputEmail', { static: false }) inputEmail!: IonInput;
+  @ViewChild('inputPassword', { static: false }) inputPassword!: IonInput;
 
-  ngOnInit() {
+  constructor(
+    private toastController: ToastController,
+    private router: Router,
+    private loadingCtrl: LoadingController,
+    private authService: AuthService,
+    private storage: Storage,
+    private fb: FormBuilder) {
+      this.verifyBiometry();
+  }
+
+  async ngOnInit() {
     this.onComponentMounted();
+    this.validateAuthBiometryAndFaceId = await this.authService.checkUserInSorage();
+    console.log(' this.acvivateBioemetry ',  this.acvivateBioemetry);
+
+
+    if(this.validateAuthBiometryAndFaceId && this.acvivateBioemetry) {
+      console.log('aquiiiii');
+
+      this.authenticate();
+    }
+
+    console.log('this.validateAuthBiometryAndFaceId: ', this.validateAuthBiometryAndFaceId);
   }
 
   public async updateBiometryInfo(info: CheckBiometryResult): Promise<void> {
@@ -30,7 +61,7 @@ export class SigninPage implements OnInit, OnDestroy {
     } else {
       // Biometry is not available, info.reason and info.code will tell you why.
       console.log('else isAvailable: ', info.isAvailable, info);
-      await this.showAlert('isAvailable: '+info.isAvailable)
+      await this.showAlert('isAvailable: ' + info.isAvailable)
     }
   }
 
@@ -71,7 +102,7 @@ export class SigninPage implements OnInit, OnDestroy {
       });
 
       await this.showAlert('Authorization successful!');
-      this.router.navigateByUrl('tabs');
+      await this.getUserInStorage();
 
     } catch (error) {
       console.log('error: ', error);
@@ -95,6 +126,75 @@ export class SigninPage implements OnInit, OnDestroy {
 
     await toast.present();
   }
+
+
+  async onLogin() {
+
+    const loading = await this.loadingCtrl.create();
+    await loading.present();
+
+    if (this.myForm.invalid) {
+      this.myForm.markAllAsTouched();
+      await loading.dismiss();
+      return;
+    }
+
+    this.authService.login(this.myForm.value.email, this.myForm.value.password).subscribe({
+      next: async (res) => {
+
+        await this.storage.set('auth', this.myForm.value);
+        await this.storage.set('user', res.user);
+        await this.storage.set('token', res.token);
+
+        await this.showAlert('Authorization successful!');
+
+        console.log('res ', res);
+
+
+        await loading.dismiss();
+        this.router.navigateByUrl('tabs');
+      },
+      error: async (err) => {
+        console.log('err ', err);
+
+        await loading.dismiss();
+      }
+    });
+
+
+    console.log('form: ', this.myForm.value);
+  }
+
+
+  async getUserInStorage() {
+    this.storage.get('auth').then(res => {
+      console.log('retorno', res );
+
+      this.myForm.get('email')?.setValue(res.email);
+      this.myForm.get('password')?.setValue(res.password);
+      this.router.navigateByUrl('tabs');
+
+    }).catch(err => console.log)
+  }
+
+  public async toggleBiometry(value: boolean) {
+    this.acvivateBioemetry =  value;
+    this.storage.set('acvivateBioemetry', this.acvivateBioemetry);
+
+    await this.verifyBiometry();
+
+  }
+
+  public async verifyBiometry() {
+    this.storage.get('acvivateBioemetry').then(res => {
+
+    this.acvivateBioemetry = res;
+
+    }).catch(err => {
+      this.acvivateBioemetry = false;
+    });
+  }
+
 
 
 }

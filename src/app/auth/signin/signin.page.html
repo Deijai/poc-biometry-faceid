@@ -5,11 +5,53 @@
     </ion-toolbar>
   </ion-header>
 
+  <form [formGroup]="myForm" (ngSubmit)="onLogin()" autocomplete="off">
+
+    <ion-grid fixed style="padding-top: 20px;">
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Email</ion-label>
+            <ion-input #inputEmail formControlName="email"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Password</ion-label>
+            <ion-input #inputPassword formControlName="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col>
+          {{acvivateBioemetry}}
+          <ion-toggle checked="{{ acvivateBioemetry ? 'true' : 'false' }}" (click)="toggleBiometry(!acvivateBioemetry)">Habilitar biometria/FaceId</ion-toggle>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col>
+
+          <ion-button *ngIf="!acvivateBioemetry" (click)="onLogin()" expand="block" shape="round">
+            Login
+            <ion-icon slot="end" name="enter-outline"></ion-icon>
+          </ion-button>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </form>
+
   <ion-grid fixed>
     <ion-row>
       <ion-col>
 
-        <ion-button (click)="authenticate()" expand="block" shape="round">
+        <ion-button *ngIf="validateAuthBiometryAndFaceId && acvivateBioemetry" (click)="authenticate()" expand="block" shape="round">
           Authenticate
           <ion-icon slot="end" name="color-filter-outline"></ion-icon>
         </ion-button>

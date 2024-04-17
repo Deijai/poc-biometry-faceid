@@ -2152,6 +2152,24 @@
         "hash": "sha512-1Iwe4XSaEYD0u7U/AnnKYNRXmPxx/doTl6pExXq/nlEd7q0AykRkPEy5rClqrQcJOrgFogAx1FwSObfgm0xnNw=="
       }
     },
+    "npm:@ionic/storage": {
+      "type": "npm",
+      "name": "npm:@ionic/storage",
+      "data": {
+        "version": "4.0.0",
+        "packageName": "@ionic/storage",
+        "hash": "sha512-3N21P19Xk6cICLnSXZ3ilRqbSXAGSFeIF3HNqz+1kARcm0UFT/vwmZreaXtFyq437vvEWOfJ2enlj3JHLKS0FA=="
+      }
+    },
+    "npm:@ionic/storage-angular": {
+      "type": "npm",
+      "name": "npm:@ionic/storage-angular",
+      "data": {
+        "version": "4.0.0",
+        "packageName": "@ionic/storage-angular",
+        "hash": "sha512-FeSmCMCm1bMRfu5TFSqLtjdfEo/dLLUhLIrPmbhSYomVZdV/dNn4mBZv9SabyxSqn4bF31hw40y+4buhG+durQ=="
+      }
+    },
     "npm:@ionic/utils-array": {
       "type": "npm",
       "name": "npm:@ionic/utils-array",
@@ -6562,6 +6580,15 @@
         "hash": "sha512-6TDAlDPZxUFCv+fuOkIoXT/V/f3Qbq8e37p+YOiYrUv3v9cc3/6x78VdfPgFVaB9dZYeLUfKgHRebpkm/oP2VQ=="
       }
     },
+    "npm:immediate": {
+      "type": "npm",
+      "name": "npm:immediate",
+      "data": {
+        "version": "3.0.6",
+        "packageName": "immediate",
+        "hash": "sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ=="
+      }
+    },
     "npm:immutable": {
       "type": "npm",
       "name": "npm:immutable",
@@ -7534,6 +7561,15 @@
         "hash": "sha512-771TFWFD70G1wLTC4oU2Cw4qvtmNrIw+wRvBtn+okgHl7slJVi7zfNcdmqDL72BojM30VNJ2UHylr1o77U37Jw=="
       }
     },
+    "npm:lie": {
+      "type": "npm",
+      "name": "npm:lie",
+      "data": {
+        "version": "3.1.1",
+        "packageName": "lie",
+        "hash": "sha512-RiNhHysUjhrDQntfYSfY4MU24coXXdEOgw9WGcKHNeEwffDYbF//u87M1EWaMGzuFoSbqW0C9C6lEEhDOAswfw=="
+      }
+    },
     "npm:lines-and-columns": {
       "type": "npm",
       "name": "npm:lines-and-columns",
@@ -7559,6 +7595,15 @@
         "version": "4.3.0",
         "packageName": "loader-runner",
         "hash": "sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg=="
+      }
+    },
+    "npm:localforage": {
+      "type": "npm",
+      "name": "npm:localforage",
+      "data": {
+        "version": "1.10.0",
+        "packageName": "localforage",
+        "hash": "sha512-14/H1aX7hzBBmmh7sGPd+AOMkkIrHM3Z1PAyGgZigA1H1p5O5ANnMyWzvpAETtG68/dC4pC0ncy3+PPGzXZHPg=="
       }
     },
     "npm:lodash": {
@@ -13756,6 +13801,35 @@
         "type": "static"
       }
     ],
+    "npm:@ionic/storage": [
+      {
+        "source": "npm:@ionic/storage",
+        "target": "npm:localforage",
+        "type": "static"
+      }
+    ],
+    "npm:@ionic/storage-angular": [
+      {
+        "source": "npm:@ionic/storage-angular",
+        "target": "npm:@angular/core",
+        "type": "static"
+      },
+      {
+        "source": "npm:@ionic/storage-angular",
+        "target": "npm:rxjs",
+        "type": "static"
+      },
+      {
+        "source": "npm:@ionic/storage-angular",
+        "target": "npm:@ionic/storage",
+        "type": "static"
+      },
+      {
+        "source": "npm:@ionic/storage-angular",
+        "target": "npm:tslib",
+        "type": "static"
+      }
+    ],
     "npm:@ionic/utils-array": [
       {
         "source": "npm:@ionic/utils-array",
@@ -19472,6 +19546,20 @@
       {
         "source": "npm:license-webpack-plugin",
         "target": "npm:webpack-sources",
+        "type": "static"
+      }
+    ],
+    "npm:lie": [
+      {
+        "source": "npm:lie",
+        "target": "npm:immediate",
+        "type": "static"
+      }
+    ],
+    "npm:localforage": [
+      {
+        "source": "npm:localforage",
+        "target": "npm:lie",
         "type": "static"
       }
     ],
