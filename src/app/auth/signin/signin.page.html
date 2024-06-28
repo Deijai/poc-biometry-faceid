@@ -26,8 +26,7 @@
     <ion-grid fixed>
       <ion-row>
         <ion-col>
-          {{acvivateBioemetry}}
-          <ion-toggle checked="{{ acvivateBioemetry ? 'true' : 'false' }}" (click)="toggleBiometry(!acvivateBioemetry)">Habilitar biometria/FaceId</ion-toggle>
+          <ion-toggle [(ngModel)]="acvivateBioemetry" name="acvivateBioemetry" [ngModelOptions]="{standalone: true}"  checked="{{ acvivateBioemetry ? 'true' : 'false' }}" (ionChange)="toggleBiometry(acvivateBioemetry)">Habilitar biometria/FaceId</ion-toggle>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -35,8 +34,8 @@
     <ion-grid fixed>
       <ion-row>
         <ion-col>
-
-          <ion-button *ngIf="!acvivateBioemetry" (click)="onLogin()" expand="block" shape="round">
+{{user | json}}
+          <ion-button *ngIf="!acvivateBioemetry || (user === null && acvivateBioemetry)" (click)="onLogin()" expand="block" shape="round">
             Login
             <ion-icon slot="end" name="enter-outline"></ion-icon>
           </ion-button>
@@ -51,7 +50,7 @@
     <ion-row>
       <ion-col>
 
-        <ion-button *ngIf="validateAuthBiometryAndFaceId && acvivateBioemetry" (click)="authenticate()" expand="block" shape="round">
+        <ion-button *ngIf="validateAuthBiometryAndFaceId && acvivateBioemetry && user !== null" (click)="authenticate()" expand="block" shape="round">
           Authenticate
           <ion-icon slot="end" name="color-filter-outline"></ion-icon>
         </ion-button>

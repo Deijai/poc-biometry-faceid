@@ -44,16 +44,11 @@ export class AuthService {
   public checkUserInSorage(): Promise<boolean> {
    return new Promise((resolve, err) => {
     this.storage.get('auth').then(res => {
-
       if(res) {
         resolve(true);
       } else {
         resolve(false);
       }
-
-
-
-     console.log('checkUserInSorage ', res);
     }).catch(err => {
       resolve(false);
     });

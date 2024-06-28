@@ -7,6 +7,7 @@ import { PluginListenerHandle } from '@capacitor/core/types/definitions';
 import { IonInput, LoadingController, ToastController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { User } from '../../shared/interfaces/user.interface';
 
 @Component({
   selector: 'app-signin',
@@ -23,6 +24,7 @@ export class SigninPage implements OnInit, OnDestroy {
   public appListener!: PluginListenerHandle
   public validateAuthBiometryAndFaceId: boolean = false;
   public acvivateBioemetry: boolean = false;
+  public user!: User;
 
   @ViewChild('inputEmail', { static: false }) inputEmail!: IonInput;
   @ViewChild('inputPassword', { static: false }) inputPassword!: IonInput;
@@ -40,16 +42,9 @@ export class SigninPage implements OnInit, OnDestroy {
   async ngOnInit() {
     this.onComponentMounted();
     this.validateAuthBiometryAndFaceId = await this.authService.checkUserInSorage();
-    console.log(' this.acvivateBioemetry ',  this.acvivateBioemetry);
-
-
     if(this.validateAuthBiometryAndFaceId && this.acvivateBioemetry) {
-      console.log('aquiiiii');
-
       this.authenticate();
     }
-
-    console.log('this.validateAuthBiometryAndFaceId: ', this.validateAuthBiometryAndFaceId);
   }
 
   public async updateBiometryInfo(info: CheckBiometryResult): Promise<void> {
@@ -60,7 +55,6 @@ export class SigninPage implements OnInit, OnDestroy {
 
     } else {
       // Biometry is not available, info.reason and info.code will tell you why.
-      console.log('else isAvailable: ', info.isAvailable, info);
       await this.showAlert('isAvailable: ' + info.isAvailable)
     }
   }
@@ -69,10 +63,6 @@ export class SigninPage implements OnInit, OnDestroy {
     this.updateBiometryInfo(await BiometricAuth.checkBiometry());
     try {
       this.appListener = await BiometricAuth.addResumeListener(this.updateBiometryInfo);
-
-      console.log('appListener: ', this.appListener);
-
-
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message)
@@ -105,8 +95,6 @@ export class SigninPage implements OnInit, OnDestroy {
       await this.getUserInStorage();
 
     } catch (error) {
-      console.log('error: ', error);
-
       // error is always an instance of BiometryError.
       if (error instanceof BiometryError) {
         if (error.code !== BiometryErrorType.userCancel) {
@@ -147,29 +135,18 @@ export class SigninPage implements OnInit, OnDestroy {
         await this.storage.set('token', res.token);
 
         await this.showAlert('Authorization successful!');
-
-        console.log('res ', res);
-
-
         await loading.dismiss();
         this.router.navigateByUrl('tabs');
       },
       error: async (err) => {
-        console.log('err ', err);
-
         await loading.dismiss();
       }
     });
-
-
-    console.log('form: ', this.myForm.value);
   }
 
 
   async getUserInStorage() {
     this.storage.get('auth').then(res => {
-      console.log('retorno', res );
-
       this.myForm.get('email')?.setValue(res.email);
       this.myForm.get('password')?.setValue(res.password);
       this.router.navigateByUrl('tabs');
@@ -178,21 +155,23 @@ export class SigninPage implements OnInit, OnDestroy {
   }
 
   public async toggleBiometry(value: boolean) {
+    console.log('value: ', value);
+
     this.acvivateBioemetry =  value;
     this.storage.set('acvivateBioemetry', this.acvivateBioemetry);
-
-    await this.verifyBiometry();
+    this.getUser();
 
   }
 
   public async verifyBiometry() {
-    this.storage.get('acvivateBioemetry').then(res => {
 
-    this.acvivateBioemetry = res;
+    this.acvivateBioemetry = await this.storage.get('acvivateBioemetry');
+  }
 
-    }).catch(err => {
-      this.acvivateBioemetry = false;
-    });
+  public async getUser(): Promise<User> {
+    const user = await this.storage.get('auth');
+    this.user = user;
+    return this.user;
   }
 
 

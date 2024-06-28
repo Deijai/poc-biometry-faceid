@@ -12,6 +12,7 @@ import { SigninPage } from './signin.page';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     SigninPageRoutingModule,
     ReactiveFormsModule,

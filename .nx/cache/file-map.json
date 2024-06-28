@@ -106,7 +106,7 @@
       },
       {
         "file": "android/app/src/main/AndroidManifest.xml",
-        "hash": "15143078514206279353"
+        "hash": "5524202539826524281"
       },
       {
         "file": "android/app/src/main/java/io/ionic/starter/MainActivity.java",
@@ -253,6 +253,10 @@
         "hash": "14753087816109454837"
       },
       {
+        "file": "android/app/src/main/res/xml/network_security_config.xml",
+        "hash": "15931975183015767582"
+      },
+      {
         "file": "android/app/src/test/java/com/getcapacitor/myapp/ExampleUnitTest.java",
         "hash": "11856600006954306230"
       },
@@ -310,11 +314,11 @@
       },
       {
         "file": "package-lock.json",
-        "hash": "7528458429970688124"
+        "hash": "5375868536972580205"
       },
       {
         "file": "package.json",
-        "hash": "16224670766406452691"
+        "hash": "5274956338824140608"
       },
       {
         "file": "src/app/app-routing.module.ts",
@@ -334,11 +338,19 @@
       },
       {
         "file": "src/app/app.component.ts",
-        "hash": "3298285516620454244"
+        "hash": "3545297439214716090"
       },
       {
         "file": "src/app/app.module.ts",
-        "hash": "17195997832060172707"
+        "hash": "16527309461492078323"
+      },
+      {
+        "file": "src/app/auth/services/auth.service.spec.ts",
+        "hash": "6927655796975040699"
+      },
+      {
+        "file": "src/app/auth/services/auth.service.ts",
+        "hash": "12044339566996774828"
       },
       {
         "file": "src/app/auth/signin/signin-routing.module.ts",
@@ -346,11 +358,11 @@
       },
       {
         "file": "src/app/auth/signin/signin.module.ts",
-        "hash": "14471138668492868639"
+        "hash": "3370090129573338531"
       },
       {
         "file": "src/app/auth/signin/signin.page.html",
-        "hash": "742390323279328298"
+        "hash": "15040167444654978930"
       },
       {
         "file": "src/app/auth/signin/signin.page.scss",
@@ -362,7 +374,7 @@
       },
       {
         "file": "src/app/auth/signin/signin.page.ts",
-        "hash": "2835106509620308711"
+        "hash": "4698706856860001729"
       },
       {
         "file": "src/app/explore-container/explore-container.component.html",
@@ -383,6 +395,22 @@
       {
         "file": "src/app/explore-container/explore-container.module.ts",
         "hash": "7418061059857182964"
+      },
+      {
+        "file": "src/app/shared/interfaces/user.interface.ts",
+        "hash": "9011886562716526423"
+      },
+      {
+        "file": "src/app/shared/services/storage.service.spec.ts",
+        "hash": "14247797087209399168"
+      },
+      {
+        "file": "src/app/shared/services/storage.service.ts",
+        "hash": "17285529354274680078"
+      },
+      {
+        "file": "src/app/shared/shared.module.ts",
+        "hash": "6626447526467318842"
       },
       {
         "file": "src/app/tab1/tab1-routing.module.ts",
@@ -490,11 +518,11 @@
       },
       {
         "file": "src/environments/environment.prod.ts",
-        "hash": "5406836414239361753"
+        "hash": "7942110161572778773"
       },
       {
         "file": "src/environments/environment.ts",
-        "hash": "17458466784506237106"
+        "hash": "4197597444839654187"
       },
       {
         "file": "src/global.scss",
